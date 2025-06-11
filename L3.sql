@@ -17,18 +17,21 @@ contract_id
 , registration_end_reason
 , contract_status
 , flag_prolongation
-, EXTRACT(YEAR FROM DATETIME(contract_valid_from)) AS start_year_of_the_contract 
-, CASE
-    WHEN DATE_DIFF(contract_valid_to, contract_valid_from, MONTH) < 6 THEN 'less than half year'
-    WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) = 1 THEN '1 year'
-    WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) = 2 THEN '2 years'
-    WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) > 2 THEN 'more than 2 years'
-    ELSE NULL
-  END AS contract_duration
+, contract_duration
+, start_year_of_contract
+    --EXTRACT(YEAR FROM DATETIME(contract_valid_from)) AS start_year_of_the_contract 
+--, CASE
+    -- WHEN DATE_DIFF(contract_valid_to, contract_valid_from, MONTH) < 6 THEN 'less than half year'
+   -- WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) = 1 THEN '1 year'
+  --  WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) = 2 THEN '2 years'
+-- WHEN DATE_DIFF(contract_valid_to, contract_valid_from, YEAR) > 2 THEN 'more than 2 years'
+ --   ELSE NULL
+--  END AS contract_duration
 FROM `psychic-heading-455311-r2.L2.L2_contracts_crm`
-WHERE contract_valid_from IS NOT NULL
-AND contract_valid_to IS NOT NULL
-AND contract_valid_to >= contract_valid_from; 
+--WHERE contract_valid_from IS NOT NULL
+--AND contract_valid_to IS NOT NULL
+--AND contract_valid_to >= contract_valid_from
+    ; 
 
 --L3 invoice
 CREATE OR REPLACE VIEW `psychic-heading-455311-r2.L3.L3_invoice` AS
