@@ -29,7 +29,7 @@ WHERE registred_date IS NOT NULL;
 CREATE OR REPLACE VIEW `psychic-heading-455311-r2.L2.L2_invoice` AS
 SELECT  
 i.invoice_id
-, i.invoice_previous_id
+--, i.invoice_previous_id nemusí tu být
 , i.contract_id
 , i.invoice_status_id
 , i.issue_date
