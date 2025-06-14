@@ -24,7 +24,7 @@ FROM `psychic-heading-455311-r2.L0_crm.contracts_crm`
 CREATE OR REPLACE VIEW `psychic-heading-455311-r2.L1.L1_branch` AS SELECT
 CAST(id_branch AS INT) AS branch_id --PK
 , LOWER(branch_name) AS branch_name
-, DATE(TIMESTAMP(date_update), "Europe/Prague") AS branch_date_update_date
+--, DATE(TIMESTAMP(date_update), "Europe/Prague") AS branch_date_update_date -- zbytečné
 FROM `psychic-heading-455311-r2.L0_google_sheets.branch` 
 WHERE id_branch != "NULL";
 
@@ -97,8 +97,9 @@ CAST(id_product AS INT) AS product_id --PK
 , LOWER(type) AS product_type
 , LOWER(category) AS product_category
 , is_vat_applicable AS is_vat_applicable
-, DATE(TIMESTAMP(date_update), "Europe/Prague") AS product_date_update_date
+--, DATE(TIMESTAMP(date_update), "Europe/Prague") AS product_date_update_date --nemusí tu být 
 FROM `psychic-heading-455311-r2.L0_google_sheets.all_products` 
+    WHERE id_product IS NOT NULL  AND name IS NOT NULL --tohle by tu naopak mělo být 
 QUALIFY ROW_NUMBER() OVER(PARTITION BY product_id) = 1 --odstranění duplicit
 ;
 
@@ -140,7 +141,7 @@ ON pp.package_status = s.product_status_id
 CREATE OR REPLACE VIEW `psychic-heading-455311-r2.L1.L1_status` AS SELECT
 CAST(id_status AS INT)AS product_status_id --PK
 , LOWER(status_name) AS product_status_name
-, DATE(TIMESTAMP(date_update), "Europe/Prague") AS product_status_update_date
+--, DATE(TIMESTAMP(date_update), "Europe/Prague") AS product_status_update_date --zbytečné
 FROM `psychic-heading-455311-r2.L0_google_sheets.status`
 WHERE id_status IS NOT NULL --odstranění nulových hodnot
 AND status_name IS NOT NULL
